@@ -11,7 +11,7 @@ void iniciar_atendimento(void){
 
     printf("Como posso te ajudar?\n");
     fgets(pergunta, sizeof(pergunta), stdin);
-
+    pergunta[strcspn(pergunta, "\n")] = '\0';
     if(consultar_arvore(pergunta, resposta, sizeof(resposta)))
         printf("Agente: %s\n", resposta);
     else
