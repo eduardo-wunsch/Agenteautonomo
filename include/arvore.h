@@ -3,35 +3,29 @@
 
 #include <stddef.h>
 
-#define MAX_FILHOS 10
 #define MAX_PALAVRA_CHAVE 50
 #define MAX_RESPOSTA 500
 
-/* Cada nó pode ter vários filhos, que são outros nós da árvore. */
+/* Cada nó de uma árvore binária tem no máximo dois filhos. */
 typedef struct NoArvore {
     char palavra_chave[MAX_PALAVRA_CHAVE];
     char resposta[MAX_RESPOSTA];
-    struct NoArvore *filhos[MAX_FILHOS];
-    size_t quantidade_filhos;
+    struct NoArvore *sube; /* filho da esquerda */
+    struct NoArvore *subd; /* filho da direita */
 } NoArvore;
 
-/* Cria um nó com uma palavra-chave e uma resposta. */
-NoArvore *criar_no(const char palavra_chave[],
-                   const char resposta[]);
+NoArvore *criar_no(const char palavra_chave[], const char resposta[]);
 
-/* Liga um nó filho a um nó pai. Retorna 1 se conseguiu. */
-int adicionar_filho(NoArvore *pai, NoArvore *filho);
+/* Liga os filhos esquerdo e direito. NULL significa que o lado ficará vazio. */
+int adicionar_filho(NoArvore *pai, NoArvore *filho_esquerdo,
+                    NoArvore *filho_direito);
 
-/* Monta a árvore inicial de assuntos e respostas. */
+/* Ainda não há perguntas e respostas cadastradas nesta árvore. */
 NoArvore *criar_arvore_atendimento(void);
 
-/* Busca a pergunta na árvore. Retorna 1 se encontrar resposta. */
-int consultar_arvore(const NoArvore *raiz,
-                     const char pergunta[],
-                     char resposta[],
-                     size_t tamanho_resposta);
+int consultar_arvore(const NoArvore *raiz, const char pergunta[],
+                     char resposta[], size_t tamanho_resposta);
 
-/* Libera os nós da árvore da memória. */
 void liberar_arvore(NoArvore *raiz);
 
 #endif
